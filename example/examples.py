@@ -18,17 +18,22 @@ import matplotlib as plt
 from SUMO_utils import SUMO_utils
 
 """
-This is an example script to demonstrate how to use SUMO_utils 
+This is an example script to demonstrate how to use SUMO_utils.
+ 
 
 """
-
-# Specify dynamic input excel 
+# Processing dynamic excel files 
+# Specify dynamic input excel-raw  
 dyn_excel = "raw_dyn.xlsx" 
+# Specify the name for the cleaned-up excel file from `raw_dyn.xlsx`
 new_dyn_excel = "new_dyn.xlsx"
 
-# Create a SUMO_utils object 
+# Initiate a SUMO_utils object 
 test = SUMO_utils()
 # Read the dynamic 
-x = test.read_dynamic(dyn_excel,new_excel = new_dyn_excel) 
+test.read_dynamic(dyn_excel,new_excel = new_dyn_excel)
+# print sheet_names in the excel 
+print(test.dynamic_sheet_names)
+# print 
 y = test.read_dynamic(new_dyn_excel)
 # Exame the the dyn_dic 

@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 class SUMO_utils():
     """
-    This is a module that contains convenient method for processing and analyzing excel file generated with CY_SUMO.
+    This is a module that contains convenient methods for processing and analyzing excel file generated with CY_SUMO.
     
     Author: Cheng Yang, Unversitiy of Michigan, Ann Arbor, MI
     
