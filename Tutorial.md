@@ -12,12 +12,34 @@ Functionality of this module includes:
 ## Table of contents
 
 ## Checklist in the `SUMO_utils/example/`
-> - `examples.py`: The template python script showing how to use SUMO_utils. 
-> - `raw_dyn.xlsx`: An example output excel file from `CY_SUMO.dynamic_run()`  
->   - In this excel, it has two sheets, namely `Trial1` and `Trial2` 
->   - In each sheet, it has 8 sumo_variables. Except that `Sumo__Plant__MBBR2__XNITO` is in a string format, others are in np.float <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/raw_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:600px;"/>  
->   - After processing, results are stored in `new_dyn.xlsx`, which has 11 sumo_variables <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/new_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:1000px;"/>  
+> 1. `examples.py`: The template python script showing how to use SUMO_utils. 
+> 2. `raw_dyn.xlsx`: An example output excel file from `CY_SUMO.dynamic_run()`  
+>   - This excel has two sheets, namely *Trial1* and *Trial2*.
+>   - Each sheet has 8 sumo_variables. Except that `Sumo__Plant__MBBR2__XNITO` is in the `string` format, others are in `np.float`. <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/raw_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:600px;"/>  
+>   - After processing, results are stored in `new_dyn.xlsx`, which has 11 sumo_variables that are in `np.float`. <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/new_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:1000px;"/>  
 >   The `Sumo__Plant__MBBR2__XNITO` is seperated into  four variables, namely `Sumo__Plant__MBBR2__XNITO_0` to `Sumo__Plant__MBBR2__XNITO_3`
-> - `FilesToGenerateExcel` *(optional)*: A folder of scripts to generate needed excel files. To understand details in these scripts please refer to the [tutorial](https://github.com/ChengYangUmich/CY_SUMO/blob/main/Tutorial.md)  in `CY_SUMO`
+> 3. `FilesToGenerateExcel` *(optional)*: A folder of scripts to generate needed excel files. To understand details in these scripts please refer to the [tutorial](https://github.com/ChengYangUmich/CY_SUMO/blob/main/Tutorial.md)  in `CY_SUMO`.
+ 
+## Code
+> Import moduel 
+> ```python 
+> from SUMO_utils import SUMO_utils
+> ```
+
+### Dynamic Tables
+> 1. Create a `SUMO_utils()` object 
+> ```python
+> test = SUMO_utils()
+> ```
+> 2. Specify input excel
+> ```python
+> dyn_excel = "raw_dyn.xlsx"  
+> ```
 > 
-> 
+> 3. Read and process table
+> ```python 
+> test.read_dynamic(dyn_excel,new_excel = new_dyn_excel)
+> ```
+>> **Attributes**- Only after `read_dynamic()` The following attributes would be initiated. 
+>> - `dynamic_sheet_names`: The sheet names in `raw_dyn.xlsx` 
+
