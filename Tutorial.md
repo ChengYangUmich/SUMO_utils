@@ -31,9 +31,10 @@ Functionality of this module includes:
 > ```python
 > test = SUMO_utils()
 > ```
-> 2. Specify input excel
+> 2. Specify the input excel and the cleaned-up output excel
 > ```python
 > dyn_excel = "raw_dyn.xlsx"  
+> new_dyn_excel = "new_dyn.xlsx"
 > ```
 > 
 > 3. Read and process table
