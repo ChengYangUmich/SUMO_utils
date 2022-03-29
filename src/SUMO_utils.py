@@ -16,16 +16,47 @@ class SUMO_utils():
     
     Author: Cheng Yang, Unversitiy of Michigan, Ann Arbor, MI
     
-    Inputs: 
-    ------------------------
-    (Mandatory)
     
+    
+    
+    Attributes: - Only important attributes are listed, attributes not mentioned 
+                  here are for internal use.
+    --------------
+        All inputs, both mandatory and optional 
+        
+        `SS_table`: pd.DataFrame()
+        --The output from parallel steady-state simulations 
+    
+    
+    
+    Methods: - Only important methods are listed, methods not mentioned 
+                  here are for internal use.
+    --------------
+        `ready_dynamic()`: read and clean up CY_SUMO generated excel files
     """
     
     def __init__(self):
-        self.current_path = os.getcwd()
+        pass
     
     def read_dynamic(self, dynamic_excel, new_excel = None):
+        """
+        This is a method to read dynamic output excels from CY_SUMO().
+
+        Parameters
+        ----------
+        dynamic_excel : STRING
+            The name of the raw dynamic simulation output excel from CY_SUMO()， e.g. 'raw_dyn.xlsx' 
+        new_excel : STRING, optional
+            The name of the raw dynamic simulation output excel from CY_SUMO()， e.g. 'raw_dyn.xlsx' . The default is None.
+
+        Returns
+        -------
+        DICTIONARY
+            A nested dictionary contains all information about dyanmic simulations after cleanup.
+             - keys: sheet_names in `dynamic_excel`
+             - values: pd.DataFrame, columns are sumo_variables, rows are values at different time stamps 
+
+        """
         # Store name string of the dynamic file
         self.dynamic_excel = dynamic_excel
         # Create pandas excel object for internal usage  
@@ -61,6 +92,22 @@ class SUMO_utils():
         return self.dyn_dic           
         
     def _clean_str_var(self,temp_df):
+        """
+        This is a internal function to format data structure in the dictionary `temp_df`.
+        Specifically, in the `temp_df`, some columns are in string format. e.g. '[1,2,3,4]', which come from SUMO.xml-RealArray.
+        Through this function, numbers in the RealArray are extracted and converted into np.float and form into a new columns.
+
+        Parameters
+        ----------
+        temp_df : pd.dataFrame
+            comes from each sheet in the CY_SUMO dynamic output excel 
+
+        Returns
+        -------
+        clean_df : pd.dataFrame
+            a clean pd.dataFrame which contains no string columns
+
+        """
         clean_df = temp_df.copy()
         # Collect columns whose values are string 
         for a_str_var in self.dyn_var_list:
@@ -83,7 +130,23 @@ class SUMO_utils():
         return clean_df
 
     def _convert_str_to_list(self, a_str):
-        # RealArrays are in the form of a string e.g. '[1,2,3,4]', convert it into a list of np.float, e.g.[1,3,4,5]
+        
+        """
+        RealArrays are in the form of a string e.g. '[1,2,3,4]'. This method converts it into a list of np.float, e.g.[1,2,3,4]
+        
+        Parameters
+        ----------
+        a_str : STRING
+            A string of a RealArray, e.g. '[0,1,2,3]'
+
+        Returns
+        -------
+        a_list : LIST, 
+            A list of np.float, e.g. [0,1,2,3]
+        n : INT
+            The number of elements in the lsit  
+
+        """
         a_str = a_str.strip("[")
         a_str = a_str.strip("]")        
         a_str = a_str.split(', ')
