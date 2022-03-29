@@ -42,4 +42,7 @@ Functionality of this module includes:
 > ```
 >> **Attributes**- Only after `read_dynamic()` The following attributes would be initiated. 
 >> - `dynamic_sheet_names`: The sheet names in `raw_dyn.xlsx` 
-
+>> - `dyn_dic`: The nested dictionary that stores data from cleaned-up excel
+>>    - `keys` are dynamic_sheet_names
+>>    - `values` are pd.DataFrames containing data after processing from each dynamic sheet in `raw_dyn.xlsx`.  
+>> - `dyn_var_list`: The list of sumo variables after cleaning up.     
