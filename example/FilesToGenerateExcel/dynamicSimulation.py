@@ -55,4 +55,4 @@ sumo_variables = ["Sumo__Time",
 # Create a CY_SUMO object 
 test = CY_SUMO(model= model,
                sumo_variables=sumo_variables)
-test.dynamic_run(dynamic_inputs,save_name="../raw.xlsx")
+test.dynamic_run(dynamic_inputs,save_name="../raw_dyn.xlsx")
