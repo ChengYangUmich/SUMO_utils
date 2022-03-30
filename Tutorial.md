@@ -17,7 +17,7 @@ Functionality of this module includes:
 3. [Quick plots](#quickplot)
    - [`Workbook_plot()`](#workbook)
    - [`sheet_plot_yyplot()`](#yyplot)
-   - [`sheet_plot_add_line()`&sheet_plot_add_scatter()](#add)
+   - [`sheet_plot_add_line()`& `sheet_plot_add_scatter()`](#add)
    - [`create_heatmap()`](#heatmap)
 
 
@@ -102,15 +102,15 @@ Functionality of this module includes:
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/LineAndScatter.jpg" alt="FineTempPic" style="height: 200px; width:600px;"/>
 
 > #### `create_heatmap()`<a name="heatmap"></a> 
-> - **This a methods to generate 2D heatmaps for sensitivity analysis 
->> - There are two internal methods embeded: `heatmap()` and `annotate_heatmap()`
+> - **This a methods to generate 2D heatmaps for sensitivity analysis.** 
+>> - There are two internal methods embeded: `heatmap()` and `annotate_heatmap()`.
 >> - **Parameters**
->>    - `my_df`: pd.DataFrame, usually is the `self.ss_df`
->>    - `x_name`, `y_name`, `z_name`, string, variable names in `my_df` 
->>    - `ax`: the axis to plot the heatmap
->>    - `cbarlabel`: the label of the colorbar (z_variable) 
+>>    - `my_df`: pd.DataFrame, usually is the `self.ss_df`.
+>>    - `x_name`, `y_name`, `z_name`, string, variable names in `my_df`.
+>>    - `ax`: the axis to plot the heatmap.
+>>    - `cbarlabel`: the label of the colorbar (z_variable). 
 >>    - `cmap`: color map to use. Other options are available [here](https://matplotlib.org/3.5.1/tutorials/colors/colormaps.html). 
->>    - `valfmt`: value format of numbers shown on the heatmap 
+>>    - `valfmt`: value format of numbers shown on the heatmap. 
 > - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/example/examples.py#L127-L139).
 > - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/src/SUMO_utils.py#L431-L472). 
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/heatmap.jpg" alt="FineTempPic" style="height: 400px; width:600px;"/>
