@@ -22,10 +22,7 @@ class SUMO_utils():
     Attributes: - Only important attributes are listed, attributes not mentioned 
                   here are for internal use.
     --------------
-        All inputs, both mandatory and optional 
-        
-        `SS_table`: pd.DataFrame()
-        --The output from parallel steady-state simulations 
+        `cmap1`: color map No. 1
     
     
     
@@ -48,7 +45,7 @@ class SUMO_utils():
         dynamic_excel : STRING
             The name of the raw dynamic simulation output excel from CY_SUMO()， e.g. 'raw_dyn.xlsx' 
         new_excel : STRING, optional
-            The name of the raw dynamic simulation output excel from CY_SUMO()， e.g. 'raw_dyn.xlsx' . The default is None.
+            The name of the raw dynamic simulation output excel from CY_SUMO()， e.g. 'new_dyn.xlsx' . The default is None.
 
         Returns
         -------
@@ -91,7 +88,74 @@ class SUMO_utils():
         self.dyn_var_list = list(self.dyn_dic[a_sheet].columns)
         
         return self.dyn_dic           
+    
+    def read_steady_state(self, steady_state_excel, new_excel = None):
+        """
+        This is a method to read steady-state output excels from CY_SUMO().
+
+        Parameters
+        ----------
+        steady_state_excel : STRING
+            The name of the raw steady-state simulation output excel from CY_SUMO()， e.g. 'raw_steady_state.xlsx' 
+        new_excel : STRING, optional
+            The name of the raw dynamic simulation output excel from CY_SUMO()， e.g. 'new_steady_state.xlsx'  . The default is None.
+
+        Returns
+        -------
+        self.ss_df
+        pd.DataFrame
+            A dataframe contains all information about steady-state simulations after clean-up.
+             
+
+        """
+        # Store name string of the steady-state excel file
+        self.ss_excel = steady_state_excel
+        # Create pandas excel object for internal usage  
+        self.ss_xls = pd.ExcelFile(self.ss_excel)
+        # Collect sheet names of the excel 
         
+        self.ss_df= pd.read_excel(self.ss_xls)
+        # drop the column of 'SS_cmd'
+        self.ss_df = self.ss_df.drop(columns = ['Unnamed: 0','SS_cmd'])
+        self.ss_df = self._clean_str_var(self.ss_df)
+        
+        # Get the columns names of the temp_df, and convert it into a list object
+        self.ss_var_list = list(self.ss_df.columns)
+
+        
+        # Save the processed data into new_excel 
+        if (new_excel != None) and (new_excel.endswith('.xlsx')):
+            self.ss_df.to_excel(new_excel)
+            print(f"---------{new_excel} was saved successfully--------")
+            
+        return self.ss_df
+        # # Start reading excel 
+        # # Create a dictionary for storage 
+        # self.dyn_dic = {}
+        # for sheetID, a_sheet in enumerate(self.dyn_sheet_names):
+        #     print(f"Processing Sheet  {a_sheet}--- {sheetID+1}/{len(self.dyn_xls.sheet_names)} ")
+        #     temp_df= pd.read_excel(self.dyn_xls, sheet_name=a_sheet)
+        #     # Drop the first column, because they are simple index 
+        #     temp_df = temp_df.drop(columns = ['Unnamed: 0'])
+        #     # Get the columns names of the temp_df, and convert it into a list object
+        #     self.dyn_var_list = list(temp_df.columns)
+        #     # Convert columns that are string into float64
+        #     self.dyn_dic[a_sheet] = self._clean_str_var(temp_df)
+        
+        # # Save the processed data into new_excel 
+        # if (new_excel != None) and (new_excel.endswith('.xlsx')):
+        #     with pd.ExcelWriter(new_excel) as writer:
+        #         for a_key in list(self.dyn_dic.keys()):
+        #             a_df = self.dyn_dic[a_key]
+        #             sheet_name = f"{a_key}"
+        #             a_df.to_excel(writer, sheet_name)
+        #     print(f"---------{new_excel} was saved successfully--------")
+        
+        # # Update the dyn_var_list after all processing are done
+        # self.dyn_var_list = list(self.dyn_dic[a_sheet].columns)
+        
+        # return self.dyn_dic               
+    
     def _clean_str_var(self,temp_df):
         """
         This is a internal function to format data structure in the dictionary `temp_df`.
@@ -111,7 +175,7 @@ class SUMO_utils():
         """
         clean_df = temp_df.copy()
         # Collect columns whose values are string 
-        for a_str_var in self.dyn_var_list:
+        for a_str_var in list(clean_df.columns):
             # Create new columns in the clean_df
             x = clean_df[a_str_var][0]
             if isinstance(x, str):

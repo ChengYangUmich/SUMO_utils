@@ -40,7 +40,6 @@ dynamic_inputs = {'Trial1':{'xml':'MABRplant.xml',
                             'tsv_file': None}
                   }
 
-
 # Get current path 
 current_path = os.getcwd()
 # Initiate name string of the sumo .dll core    
@@ -54,5 +53,17 @@ sumo_variables = ["Sumo__Time",
 
 # Create a CY_SUMO object 
 test = CY_SUMO(model= model,
-               sumo_variables=sumo_variables)
+                sumo_variables=sumo_variables)
+# Run dynamic simulations 
 test.dynamic_run(dynamic_inputs,save_name="../raw_dyn.xlsx")
+
+# Run steady state simuations
+steady_state_input = {'Sumo__Plant__Sideflowdivider1__param__Qpumped_target': [5,8,11,14], # WAS flow
+                      "Sumo__Plant__MBBR2__param__MABR_SSA":[150,250,350,400]}  # Packing density of MABR
+param_dict = create_param_dict(steady_state_input)
+test2 = CY_SUMO(model= model,
+              sumo_variables=sumo_variables,
+              param_dic=param_dict)
+test2.steady_state(save_table = True, 
+                  save_name = "../raw_steady_state.xlsx", 
+                  save_xml = False)
