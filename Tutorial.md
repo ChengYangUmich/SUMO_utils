@@ -15,9 +15,9 @@ Functionality of this module includes:
 > 1. `examples.py`: The template python script showing how to use SUMO_utils. 
 > 2. `raw_dyn.xlsx`: An example output excel file from `CY_SUMO.dynamic_run()`  
 >   - This excel has two sheets, namely *Trial1* and *Trial2*.
->   - Each sheet has 8 sumo_variables. Except that `Sumo__Plant__MBBR2__XNITO` is in the `string` format, others are in `np.float`. <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/raw_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:600px;"/>  
->   - After processing, results are stored in `new_dyn.xlsx`, which has 11 sumo_variables that are in `np.float`. <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/new_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:1000px;"/>  
->   The `Sumo__Plant__MBBR2__XNITO` is seperated into  four variables, namely `Sumo__Plant__MBBR2__XNITO_0` to `Sumo__Plant__MBBR2__XNITO_3`
+>   - Each sheet has 8 sumo_variables. Except that `Sumo__Plant__MBBR2__XNITO` is in the `string` format, others are in the `np.float`format. <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/raw_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:600px;"/>  
+>   - After processing, results are stored in `new_dyn.xlsx`, which has 11 sumo_variables that are `np.float`. The `Sumo__Plant__MBBR2__XNITO` is seperated into  four variables, namely `Sumo__Plant__MBBR2__XNITO_0` to `Sumo__Plant__MBBR2__XNITO_3` <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/new_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:1000px;"/>  
+>   
 > 3. `FilesToGenerateExcel` *(optional)*: A folder of scripts to generate needed excel files. To understand details in these scripts please refer to the [tutorial](https://github.com/ChengYangUmich/CY_SUMO/blob/main/Tutorial.md)  in `CY_SUMO`.
  
 ## Code
@@ -37,13 +37,32 @@ Functionality of this module includes:
 > new_dyn_excel = "new_dyn.xlsx"
 > ```
 > 
-> 3. Read and process table
+> 3. Read and process table, the cleaned-up excel will be stored in as *new_dyn_excel*
 > ```python 
-> test.read_dynamic(dyn_excel,new_excel = new_dyn_excel)
+> test.read_dynamic(dyn_excel, new_excel = new_dyn_excel)
 > ```
->> **Attributes**- Only after `read_dynamic()` The following attributes would be initiated. 
->> - `dynamic_sheet_names`: The sheet names in `raw_dyn.xlsx` 
+>> **Attributes**- Only after `read_dynamic()` will the following attributes be initiated. 
+>> - `dyn_sheet_names`: The sheet names in `raw_dyn.xlsx` 
 >> - `dyn_dic`: The nested dictionary that stores data from cleaned-up excel
 >>    - `keys` are dynamic_sheet_names
 >>    - `values` are pd.DataFrames containing data after processing from each dynamic sheet in `raw_dyn.xlsx`.  
->> - `dyn_var_list`: The list of sumo variables after cleaning up.     
+>> - `dyn_var_list`: The list of sumo variables after cleaning up.    
+
+### Quick plots 
+> #### `Workbook_plot()` 
+> - **This is a method to traverse through all sheets, extract the same x,y variables, and plot them together on one Axis.**
+> - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/example/examples.py#L42-L62).
+> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/src/SUMO_utils.py#L159-L192). 
+> <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/workbookplot.jpg" alt="FineTempPic" style="height: 400px; width:600px;"/>
+
+> #### `sheet_plot_yyplot()` 
+> - **This is a method that focuses on one sheet and generates double-y-axes plot.**
+> - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/example/examples.py#L42-L62).
+> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/src/SUMO_utils.py#L159-L192). 
+> <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/yyplot.jpg" alt="FineTempPic" style="height: 200px; width:600px;"/>
+
+> #### `sheet_plot_add_line()` and `sheet_plot_add_scatter()`
+> - **These are methods to generate one line or one set of scatters to an existing axis.**
+> - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/example/examples.py#L42-L62).
+> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/src/SUMO_utils.py#L159-L192). 
+> <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/LineAndScatter.jpg" alt="FineTempPic" style="height: 200px; width:600px;"/>
