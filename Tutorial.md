@@ -81,17 +81,17 @@ Functionality of this module includes:
 > #### `sheet_plot_yyplot()` 
 > - **This is a method that focuses on one sheet and generates double-y-axes plot.**
 > - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/example/examples.py#L71-L96).
-> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/src/SUMO_utils.py#L260-L297). 
+> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c3c56331261256e254f6baecfe260d7bfb8369ad/src/SUMO_utils.py#L260-L297). 
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/yyplot.jpg" alt="FineTempPic" style="height: 200px; width:600px;"/>
 
 > #### `sheet_plot_add_line()` and `sheet_plot_add_scatter()`
 > - **These are methods to generate one line or one set of scatters to an existing axis.**
 > - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/example/examples.py#L98-L124).
-> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/src/SUMO_utils.py#L299-L313). 
+> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c3c56331261256e254f6baecfe260d7bfb8369ad/src/SUMO_utils.py#L299-L313). 
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/LineAndScatter.jpg" alt="FineTempPic" style="height: 200px; width:600px;"/>
 
 > #### `create_heatmap()`
 > - **This a methods to generate 2D heatmaps for sensitivity analysis 
 > - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/example/examples.py#L127-L136).
-> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/79051e7d836e6cc59181f932eb095af42c983021/src/SUMO_utils.py#L431-472). 
+> - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c3c56331261256e254f6baecfe260d7bfb8369ad/src/SUMO_utils.py#L431-472). 
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/heatmap.jpg" alt="FineTempPic" style="height: 400px; width:600px;"/>
