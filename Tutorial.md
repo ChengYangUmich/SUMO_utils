@@ -13,12 +13,15 @@ Functionality of this module includes:
 
 ## Checklist in the `SUMO_utils/example/`
 > 1. `examples.py`: The template python script showing how to use SUMO_utils. 
-> 2. `raw_dyn.xlsx`: An example output excel file from `CY_SUMO.dynamic_run()`  
+> 2. `raw_dyn.xlsx`: An example output excel file from `CY_SUMO.dynamic_run()`.  
 >   - This excel has two sheets, namely *Trial1* and *Trial2*.
 >   - Each sheet has 8 sumo_variables. Except that `Sumo__Plant__MBBR2__XNITO` is in the `string` format, others are in the `np.float`format. <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/raw_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:600px;"/>  
 >   - After processing, results are stored in `new_dyn.xlsx`, which has 11 sumo_variables that are `np.float`. The `Sumo__Plant__MBBR2__XNITO` is seperated into  four variables, namely `Sumo__Plant__MBBR2__XNITO_0` to `Sumo__Plant__MBBR2__XNITO_3` <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/new_dyn_excel.JPG" alt="FineTempPic" style="height: 100px; width:1000px;"/>  
->   
-> 3. `FilesToGenerateExcel` *(optional)*: A folder of scripts to generate needed excel files. To understand details in these scripts please refer to the [tutorial](https://github.com/ChengYangUmich/CY_SUMO/blob/main/Tutorial.md)  in `CY_SUMO`.
+> 3. `raw_steady_state.xlsx`: An example output excel file from `CY_SUMO.steady_state()`.
+>   - This excel has only one sheet.
+>   - Each sheet has 9 sumo_variables. Except that `Sumo__Plant__MBBR2__XNITO` and `SS_cmd` are in the `string` format, others are in the `np.float`format. 
+>   - After processing, results are stored in `new_ss.xlsx`, which has 11 sumo_variables that are `np.float`. The `SS_cmd` is dropped. The `Sumo__Plant__MBBR2__XNITO` is seperated into  four variables, namely `Sumo__Plant__MBBR2__XNITO_0` to `Sumo__Plant__MBBR2__XNITO_3.
+> 4. `FilesToGenerateExcel` *(optional)*: A folder of materials and a python script `RunToCreateExcels.py` to generate needed excel files. To understand details in these scripts please refer to the [tutorial](https://github.com/ChengYangUmich/CY_SUMO/blob/main/Tutorial.md)  in `CY_SUMO`.
  
 ## Code
 > Import moduel 
@@ -43,10 +46,30 @@ Functionality of this module includes:
 > ```
 >> **Attributes**- Only after `read_dynamic()` will the following attributes be initiated. 
 >> - `dyn_sheet_names`: The sheet names in `raw_dyn.xlsx` 
->> - `dyn_dic`: The nested dictionary that stores data from cleaned-up excel
+>> - `dyn_dic`: The nested dictionary that stores data from the cleaned-up excel
 >>    - `keys` are dynamic_sheet_names
 >>    - `values` are pd.DataFrames containing data after processing from each dynamic sheet in `raw_dyn.xlsx`.  
 >> - `dyn_var_list`: The list of sumo variables after cleaning up.    
+
+### Steady-state Tables
+> 1. Create a `SUMO_utils()` object 
+> ```python
+> test = SUMO_utils()
+> ```
+> 2. Specify the input excel and the cleaned-up output excel
+> ```python
+> ss_excel = "raw_steady_state.xlsx" 
+> new_ss_excel = "new_steady_state.xlsx"
+> ```
+> 
+> 3. Read and process table, the cleaned-up excel will be stored in as *new_dyn_excel*
+> ```python 
+> test.read_steady_state(steady_state_excel=ss_excel, new_excel=new_ss_excel)
+> ```
+>> **Attributes**- Only after `read_steady_state()` will the following attributes be initiated. 
+>> - `ss_df`: The pandas.DataFrame that stores data from the cleaned-up excel 
+>> - `ss_var_list`: The list of sumo variables after cleaning up. 
+
 
 ### Quick plots 
 > #### `Workbook_plot()` 
