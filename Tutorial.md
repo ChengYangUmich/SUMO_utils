@@ -10,8 +10,19 @@ Functionality of this module includes:
  > Version: 2022_03_29
 
 ## Table of contents
+1. [Checklist in the `SUMO_utils/example/`](#checklist)
+2. [Code](#code)
+   - [Dynamic Tables](#dyn_tab)
+   - [Steady-state Tables](#ss_tab)
+3. [Quick plots](#quickplot)
+   - [`Workbook_plot()`](#workbook)
+   - [`sheet_plot_yyplot()`](#yyplot)
+   - [`sheet_plot_add_line()`&sheet_plot_add_scatter()](#add)
+   - [`create_heatmap()`](#heatmap)
 
-## Checklist in the `SUMO_utils/example/`
+
+
+## Checklist in the `SUMO_utils/example/`<a name="checklist"></a>
 > 1. `examples.py`: The template python script showing how to use SUMO_utils. 
 > 2. `raw_dyn.xlsx`: An example output excel file from `CY_SUMO.dynamic_run()`.  
 >   - This excel has two sheets, namely *Trial1* and *Trial2*.
@@ -23,13 +34,13 @@ Functionality of this module includes:
 >   - After processing, results are stored in `new_ss.xlsx`, which has 11 sumo_variables that are `np.float`. The `SS_cmd` is dropped. The `Sumo__Plant__MBBR2__XNITO` is seperated into  four variables, namely `Sumo__Plant__MBBR2__XNITO_0` to `Sumo__Plant__MBBR2__XNITO_3.
 > 4. `FilesToGenerateExcel` *(optional)*: A folder of materials and a python script `RunToCreateExcels.py` to generate needed excel files. To understand details in these scripts please refer to the [tutorial](https://github.com/ChengYangUmich/CY_SUMO/blob/main/Tutorial.md)  in `CY_SUMO`.
  
-## Code
+## Code<a name="code"></a>
 > Import moduel 
 > ```python 
 > from SUMO_utils import SUMO_utils
 > ```
 
-### Dynamic Tables
+### Dynamic Tables<a name="dyn_tab"></a>
 > 1. Create a `SUMO_utils()` object 
 > ```python
 > test = SUMO_utils()
@@ -51,7 +62,7 @@ Functionality of this module includes:
 >>    - `values` are pd.DataFrames containing data after processing from each dynamic sheet in `raw_dyn.xlsx`.  
 >> - `dyn_var_list`: The list of sumo variables after cleaning up.    
 
-### Steady-state Tables
+### Steady-state Tables<a name="ss_tab"></a>
 > 1. Create a `SUMO_utils()` object 
 > ```python
 > test = SUMO_utils()
@@ -71,26 +82,26 @@ Functionality of this module includes:
 >> - `ss_var_list`: The list of sumo variables after cleaning up. 
 
 
-### Quick plots 
-> #### `Workbook_plot()` 
+### Quick plots<a name="quickplot"></a> 
+> #### `Workbook_plot()` <a name="workbook"></a> 
 > - **This is a method to traverse through all sheets, extract the same x,y variables, and plot them together on one Axis.**
 > - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/example/examples.py#L48-L69).
 > - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/src/SUMO_utils.py#L224-L257). 
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/workbookplot.jpg" alt="FineTempPic" style="height: 400px; width:600px;"/>
 
-> #### `sheet_plot_yyplot()` 
+> #### `sheet_plot_yyplot()` <a name="yyplot"></a> 
 > - **This is a method that focuses on one sheet and generates double-y-axes plot.**
 > - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/example/examples.py#L71-L96).
 > - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/src/SUMO_utils.py#L259-L297). 
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/yyplot.jpg" alt="FineTempPic" style="height: 200px; width:600px;"/>
 
-> #### `sheet_plot_add_line()` and `sheet_plot_add_scatter()`
+> #### `sheet_plot_add_line()` and `sheet_plot_add_scatter()` <a name="add"></a> 
 > - **These are methods to generate one line or one set of scatters to an existing axis.**
 > - **How to use**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/example/examples.py#L98-L124).
 > - **Source Code**: please see [here](https://github.com/ChengYangUmich/SUMO_utils/blob/c64e5878c7aed2af1b72c9761e5ba8dec9b9111b/src/SUMO_utils.py#L299-L313). 
 > <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/LineAndScatter.jpg" alt="FineTempPic" style="height: 200px; width:600px;"/>
 
-> #### `create_heatmap()`
+> #### `create_heatmap()`<a name="heatmap"></a> 
 > - **This a methods to generate 2D heatmaps for sensitivity analysis 
 >> - There are two internal methods embeded: `heatmap()` and `annotate_heatmap()`
 >> - **Parameters**
