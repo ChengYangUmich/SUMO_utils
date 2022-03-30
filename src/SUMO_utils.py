@@ -36,7 +36,8 @@ class SUMO_utils():
     """
     
     def __init__(self):
-        pass
+        self.cmap1 = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', 
+                      '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']
     
     def read_dynamic(self, dynamic_excel, new_excel = None):
         """
@@ -62,12 +63,12 @@ class SUMO_utils():
         # Create pandas excel object for internal usage  
         self.dyn_xls = pd.ExcelFile(self.dynamic_excel)
         # Collect sheet names of the excel 
-        self.dynamic_sheet_names = self.dyn_xls.sheet_names
+        self.dyn_sheet_names = self.dyn_xls.sheet_names
         
         # Start reading excel 
         # Create a dictionary for storage 
         self.dyn_dic = {}
-        for sheetID, a_sheet in enumerate(self.dynamic_sheet_names):
+        for sheetID, a_sheet in enumerate(self.dyn_sheet_names):
             print(f"Processing Sheet  {a_sheet}--- {sheetID+1}/{len(self.dyn_xls.sheet_names)} ")
             temp_df= pd.read_excel(self.dyn_xls, sheet_name=a_sheet)
             # Drop the first column, because they are simple index 
@@ -154,4 +155,94 @@ class SUMO_utils():
         a_list = [np.float(a_var) for a_var in a_str]
         return a_list, n
         
+    # Quickplots - overlaying results from different sheets 
+    def workbook_plot(self, x_name,y_name, ax = None, **kwargs):
+        """
+        This is a method to traverse through all sheets, extract the same x,y variables, and plot them together on one Axis.  
+
+        Parameters
+        ----------
+        x_name : STRING
+            Could be query from `self.dyn_var_lsit`.
+        y_name : STRING
+            Could be query from `self.dyn_var_lsit`.
+        ax : matplot,pyplot.axes, optional
+            The axis in which lines are drawn. The default is None.If unspecified, it will use the current axis.
+        **kwargs : 
+            Other arguments as same in matplotlib.pyplot.plot() 
+
+        Returns
+        -------
+        line_list : LIST
+            a list of the plotted lines objects
+            
+        """
         
+        if ax == None:
+            ax = plt.gca()
+        line_list = []
+        for a_sheet in self.dyn_sheet_names:
+            x = self.dyn_dic[a_sheet][x_name]
+            y = self.dyn_dic[a_sheet][y_name]
+            line_list.append(ax.plot(x,y,label = a_sheet,**kwargs))
+        ax.grid(True)
+        ax.legend()
+        ax.set_xlabel(x_name)
+        ax.set_ylabel(y_name)
+        return line_list
+    
+    # Quickplots - plots for one sheets 
+    def sheet_plot_yyplot(self,sheet_name,x_name,y1_name,y2_name, ax,**kwargs):
+        """
+        This is a method that focuses on one sheet and generates double y axes plot.
+        
+        Parameters
+        ----------
+        sheet_name : STRING
+            Could be query from `self.dyn_sheet_names`.
+        x_name : STRING
+            Could be query from `self.dyn_var_lsit`.
+        y1_name : STRING
+            Could be query from `self.dyn_var_lsit`.
+        y2_name : STRING
+            Could be query from `self.dyn_var_lsit`.
+        ax : matplot,pyplot.axes, optional
+            The axis in which lines are drawn. The default is None.If unspecified, it will use the current axis.
+        **kwargs : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        line1: the left-y axis line 
+        line2: the right-y axis line
+        ax2: the axis generated that shared the same x-axis with the input `ax`. 
+
+        """
+        x = self.dyn_dic[sheet_name][x_name]
+        y1 = self.dyn_dic[sheet_name][y1_name]
+        y2 = self.dyn_dic[sheet_name][y2_name]
+        
+        ax2 = ax.twinx()
+        line1 = ax.plot(x,y1,color = self.cmap1[0],**kwargs)
+        line2 = ax2.plot(x,y2,self.cmap1[1], **kwargs)
+        
+        # Set ticks color 
+        ax.tick_params(axis='y', colors=self.cmap1[0])
+        ax2.tick_params(axis='y', colors=self.cmap1[1])
+        return line1, line2, ax2
+    
+    def sheet_plot_add_line(self,sheet_name,x_name,y_name, ax = None,**kwargs):
+        if ax == None:
+            ax = plt.gca()
+        x = self.dyn_dic[sheet_name][x_name]
+        y = self.dyn_dic[sheet_name][y_name]
+        line = ax.plot(x,y,**kwargs)
+        return line
+    
+    def sheet_plot_add_scatter(self,sheet_name,x_name,y_name, ax = None,**kwargs):
+        if ax == None:
+            ax = plt.gca()
+        x = self.dyn_dic[sheet_name][x_name]
+        y = self.dyn_dic[sheet_name][y_name]
+        line = ax.scatter(x,y,**kwargs)
+        return line
