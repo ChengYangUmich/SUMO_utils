@@ -133,4 +133,6 @@ z_name = 'Sumo__Plant__Effluent1__SNHx'
 test.create_heatmap(test.ss_df, x_name, y_name, z_name, axs, cmap="YlGn", cbarlabel = 'Effluent Ammonia, mg-N/L')
 axs.set_xlabel('MABR packing Density, m2/m3')
 axs.set_ylabel('WAS flow, m3/d')
-fig.savefig(".\Pics\heatmap.jpg")
+fig.savefig(".\Pics\heatmap.jpg") 
+
+# 
