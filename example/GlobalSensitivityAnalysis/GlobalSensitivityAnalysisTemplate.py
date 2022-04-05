@@ -34,12 +34,12 @@ SA_inputs = {
 }
 
 # Generate samples
-param_values = saltelli.sample(SA_inputs, 32, calc_second_order=False)
+param_values = saltelli.sample(SA_inputs, 128, calc_second_order=False)
 
 # Visualize how samples are collected 
 ax = plt.axes(projection='3d')
 ax.scatter3D(param_values[:,0], param_values[:,1], param_values[:,2], 'blue')
-
+plt.savefig('..\Pics\SA_inputs.jpg')
 
 # Create steady-state input dictionary 
 param_dict = {}
@@ -69,3 +69,25 @@ Si = sobol.analyze(SA_inputs, Y, calc_second_order=False)
 
 # Print the first-order sensitivity indices
 print(Si)
+
+
+
+
+
+fig, axs = plt.subplots(1,2,figsize= (8,4))
+T = Si.plot(ax=axs)
+for an_ax in T:
+    an_ax.set_xlabel('DO setpoints')
+    an_ax.set_ylabel('Sensitivity Index')
+    an_ax.set_xticklabels(['Tank3','Tank4','Tank5'])
+fig.tight_layout()
+fig.savefig('..\Pics\SobolIndex.jpg')
+
+fig, axs = plt.subplots(1,3,figsize= (8,3))
+for i,an_ax in enumerate(axs):
+    an_ax.scatter(param_values[:,i],Y)
+    an_ax.set_xlabel('DO setpoints, mg/L')
+    an_ax.set_ylabel('Effluent ammonia, mg-N/L')
+    an_ax.set_title(f'Tank {i+3}')
+fig.tight_layout()
+fig.savefig('..\Pics\AOplantScatter.jpg')
