@@ -104,3 +104,37 @@ In this tutorial, we will walk through together an example that are provided in 
 > Si = sobol.analyze(SA_inputs, Y, calc_second_order=False)
 > ```
 > ### Visualize Results
+> #### Visualize how samples are collected 
+> ```python
+> ax = plt.axes(projection='3d')
+> ax.scatter3D(param_values[:,0], param_values[:,1], param_values[:,2], 'blue')
+> plt.savefig('..\Pics\SA_inputs.jpg')
+> ```
+> <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/SA_inputs.jpg" alt="FineTempPic" style="height: 300px; width:300px;"/>  
+> 
+> #### Visualize the relationship between x's and y in the samples 
+> ```python
+> fig, axs = plt.subplots(1,3,figsize= (8,3))
+> for i,an_ax in enumerate(axs):
+>     an_ax.scatter(param_values[:,i],Y)
+>     an_ax.set_xlabel('DO setpoints, mg/L')
+>     an_ax.set_ylabel('Effluent ammonia, mg-N/L')
+>     an_ax.set_title(f'Tank {i+3}')
+> fig.tight_layout()
+> fig.savefig('..\Pics\AOplantScatter.jpg')
+> ```
+> <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/AOplantScatter.jpg" alt="FineTempPic" style="height: 300px; width:800px;"/>  
+>
+> #### Visualize the sobol indices as results of the global sensitivity analysis 
+> It looks like the last tank DO explains the most variances in the effluent ammonia. If the total-order indices are substantially larger than the first-order indices, then there is likely higher-order interactions occurring.Therefore, strong interactions could be seen among tanks.   
+> ```python
+> fig, axs = plt.subplots(1,2,figsize= (8,4))
+> T = Si.plot(ax=axs)
+> for an_ax in T:
+>     an_ax.set_xlabel('DO setpoints')
+>     an_ax.set_ylabel('Sensitivity Index')
+>     an_ax.set_xticklabels(['Tank3','Tank4','Tank5'])
+> fig.tight_layout()
+> fig.savefig('..\Pics\SobolIndex.jpg')
+> ```
+> <img src="https://github.com/ChengYangUmich/SUMO_utils/blob/main/example/Pics/SobolIndex.jpg" alt="FineTempPic" style="height: 300px; width:700px;"/>  
